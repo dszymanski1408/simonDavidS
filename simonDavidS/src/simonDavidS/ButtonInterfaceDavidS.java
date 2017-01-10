@@ -2,7 +2,7 @@
  * 
  */
 package simonDavidS;
-
+//now it works
 import java.awt.Color;
 
 import gui.components.Action;
