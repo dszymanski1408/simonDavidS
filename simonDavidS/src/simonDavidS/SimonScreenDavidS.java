@@ -29,13 +29,64 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		label.setText("");
+		nextRound();
+	}
 
+	private void nextRound() {
+		// TODO Auto-generated method stub
+		acceptingInput = false;
+		roundNumber++;
+		moves.add(randomMove());
+		progress.setSequenceSize(moves.size());
+		progress.setRound(roundNumber);
+		changeText("Simon's Turn");
+		changeText("");
+		playSequence();
+		changeText("Your Turn");
+		changeText("");
+		acceptingInput = true;
+		sequenceIndex = 0;
+	}
+
+	private void playSequence() {
+		// TODO Auto-generated method stub
+		ButtonInterfaceDavidS b = null;
+		for(MoveInterfaceDavidS m: moves){
+			if(b != null){
+				b.dim();
+				b = m.getButton();
+				b.highlight();
+				int sleepTime = (int)((1000/roundNumber + 1) * 2);
+				try {
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		b.dim();
+	}
+
+	private void changeText(String string) {
+		// TODO Auto-generated method stub
+		label.setText(string);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void initAllObjects(ArrayList<Visible> viewObjects) {
 		// TODO Auto-generated method stub
 		addButtons();
+		for(int i = 0; i < buttons.length; i++){
+			viewObjects.add(buttons[i]);
+		}
 		progress = getProgress();
 		label = new TextLabel(130, 230, 300, 40, "Let's play Simon!");
 		moves = new ArrayList<MoveInterfaceDavidS>();
@@ -57,6 +108,11 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 		}
 		b = buttons[randomInt];
 		return getMove(b);
+	}
+
+	private MoveInterfaceDavidS getMove(ButtonInterfaceDavidS b) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -84,18 +140,37 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 						Thread blink = new Thread(new Runnable(){
 							public void run(){
 								b.highlight();
-								Thread.sleep(800);
+								try {
+									Thread.sleep(800);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								b.dim();
 							}
 						});
 						blink.start();
 						if(b == moves.get(sequenceIndex).getButton()){
+							sequenceIndex++;
 							
 						}
+						else{
+							progress.gameOver();
+						}
+						if(sequenceIndex == moves.size()){
+							Thread nextRound = new Thread(SimonScreenDavidS.this);
+							nextRound.start(); 
+						}
+						
 					}
 				}
 			});
 		}
+	}
+
+	private ButtonInterfaceDavidS getAButton() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
