@@ -83,7 +83,7 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 	@Override
 	public void initAllObjects(ArrayList<Visible> viewObjects) {
 		// TODO Auto-generated method stub
-		addButtons();
+		addButtons(viewObjects);
 		for(int i = 0; i < buttons.length; i++){
 			viewObjects.add(buttons[i]);
 		}
@@ -107,12 +107,12 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 			randomInt = (int)(Math.random()*buttons.length);
 		}
 		b = buttons[randomInt];
-		return getMove(b);
+		return getMove(b, randomInt);
 	}
 
-	private MoveInterfaceDavidS getMove(ButtonInterfaceDavidS b) {
+	private MoveInterfaceDavidS getMove(ButtonInterfaceDavidS b, int select) {
 		// TODO Auto-generated method stub
-		return null;
+		return new Move(buttons[select]);
 	}
 
 	/**
@@ -120,21 +120,24 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 	*/
 	private ProgressInterfaceDavidS getProgress() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Progress();
 	}
 
-	private void addButtons() {
+	private void addButtons(ArrayList<Visible> viewObject) {
 		// TODO Auto-generated method stub
 		int numberOfButtons = 4;
 		Color[] colors = {Color.blue, Color.red, Color.yellow, Color.green};
 		int[] xs = {100, 150, 100, 150};
 		int[] ys = {100, 200, 300, 200};
-		for(int i = 0; i < numberOfButtons; i++){
-			final ButtonInterfaceDavidS b = getAButton();
-			b.setColor(colors[i]);
-			b.setX(xs[i]);
-			b.setY(ys[i]);
-			b.setAction(new Action(){
+		buttons = new ButtonInterfaceDavidS[numberOfButtons]; 
+		for(int i = 0; i < buttons.length; i++){
+			buttons[i] = getAButton();
+			buttons[i].setColor(colors[i]);
+			buttons[i].setX(xs[i]);
+			buttons[i].setY(ys[i]);
+			final ButtonInterfaceDavidS b = buttons[i];
+			b.dim();
+			buttons[i].setAction(new Action(){
 				public void act(){
 					if(acceptingInput){
 						Thread blink = new Thread(new Runnable(){
@@ -156,6 +159,7 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 						}
 						else{
 							progress.gameOver();
+							return;
 						}
 						if(sequenceIndex == moves.size()){
 							Thread nextRound = new Thread(SimonScreenDavidS.this);
@@ -165,12 +169,13 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 					}
 				}
 			});
+			viewObject.add(buttons[i]);
 		}
 	}
 
 	private ButtonInterfaceDavidS getAButton() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Button();
 	}
 
 }

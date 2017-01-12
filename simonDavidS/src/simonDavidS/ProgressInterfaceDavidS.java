@@ -3,6 +3,8 @@
  */
 package simonDavidS;
 
+import java.awt.Graphics2D;
+
 import gui.components.Visible;
 
 /**
@@ -16,5 +18,7 @@ public interface ProgressInterfaceDavidS extends Visible {
 	void setRound(int roundNumber);
 
 	void gameOver();
+
+	void update(Graphics2D g);
 
 }
