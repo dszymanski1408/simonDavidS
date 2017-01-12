@@ -10,15 +10,15 @@ import gui.components.Components;
 public class Button extends Components implements ButtonInterfaceDavidS {
 	private static int w = 40;
 	private static int h = 40;
-	private int x;
-	private int y;
+	private static int x;
+	private static int y;
 	private Action act;
 	private Color color;
 	private Color normalColor;
 	private boolean isHighlighted;
 	
 	public Button() {
-		super(0, 0, w, h);
+		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
 	}
 
