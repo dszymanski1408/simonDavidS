@@ -8,8 +8,8 @@ import gui.components.Action;
 import gui.components.Components;
 
 public class Button extends Components implements ButtonInterfaceDavidS {
-	private static int w = 40;
-	private static int h = 40;
+	private static int w = 60;
+	private static int h = 60;
 	private static int x;
 	private static int y;
 	private Action act;
