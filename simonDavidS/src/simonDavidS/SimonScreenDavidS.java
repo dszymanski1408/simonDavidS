@@ -52,23 +52,25 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 	private void playSequence() {
 		// TODO Auto-generated method stub
 		ButtonInterfaceDavidS b = null;
-		for(MoveInterfaceDavidS m: moves){
+		for(int i = 0; i < moves.size(); i++){
 			if(b != null){
 				b.dim();
-				b = m.getButton();
-				b.highlight();
-				int sleepTime = (int)((1000/roundNumber + 1) * 2);
-				try {
-					Thread.sleep(sleepTime);
-				} catch (InterruptedException e) {
+			}
+			b = moves.get(i).getButton();
+			b.highlight();
+			int sleepTime = (int)((1000/roundNumber + 1) * 2);
+			try {
+			Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				e.printStackTrace();
 			}
 		}
-		b.dim();
+		if(b != null){
+			b.dim();
+		}
 	}
-
+	
 	private void changeText(String string) {
 		// TODO Auto-generated method stub
 		label.setText(string);
@@ -107,12 +109,12 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 			randomInt = (int)(Math.random()*buttons.length);
 		}
 		b = buttons[randomInt];
-		return getMove(b, randomInt);
+		return getMove(b);
 	}
 
-	private MoveInterfaceDavidS getMove(ButtonInterfaceDavidS b, int select) {
+	private MoveInterfaceDavidS getMove(ButtonInterfaceDavidS b) {
 		// TODO Auto-generated method stub
-		return new Move(buttons[select]);
+		return new Move(b);
 	}
 
 	/**
@@ -125,16 +127,15 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 
 	private void addButtons(ArrayList<Visible> viewObject) {
 		// TODO Auto-generated method stub
-		int numberOfButtons = 4;
-		Color[] colors = {Color.blue, Color.red, Color.yellow, Color.green};
-		int[] xs = {100, 150, 100, 150};
-		int[] ys = {100, 200, 300, 200};
-		buttons = new ButtonInterfaceDavidS[numberOfButtons]; 
+		int numberOfButtons = 5;
+		Color[] colors = {Color.blue, Color.red, Color.yellow, Color.green, Color.magenta};
+		int[] x = {100, 200, 300, 400, 500};
+		buttons = new ButtonInterfaceDavidS[numberOfButtons];	
 		for(int i = 0; i < buttons.length; i++){
 			buttons[i] = getAButton();
 			buttons[i].setColor(colors[i]);
-			buttons[i].setX(xs[i]);
-			buttons[i].setY(ys[i]);
+			buttons[i].setX(x[i]);
+			buttons[i].setY(300);
 			final ButtonInterfaceDavidS b = buttons[i];
 			b.dim();
 			buttons[i].setAction(new Action(){
@@ -159,6 +160,7 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 						}
 						else{
 							progress.gameOver();
+							acceptingInput = false;
 							return;
 						}
 						if(sequenceIndex == moves.size()){
@@ -169,7 +171,8 @@ public class SimonScreenDavidS extends ClickableScreen implements Runnable {
 					}
 				}
 			});
-			viewObject.add(buttons[i]);
+			buttons[i] = b;
+			viewObject.add(b);
 		}
 	}
 
