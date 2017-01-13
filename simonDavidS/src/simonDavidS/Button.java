@@ -41,19 +41,20 @@ public class Button extends Components implements ButtonInterfaceDavidS {
 	public void setColor(Color color) {
 		// TODO Auto-generated method stub
 		this.color = color;
+		normalColor = this.color;
 		update();
 	}
 
 	@Override
 	public void setX(int x) {
 		// TODO Auto-generated method stub
-		this.x = x;
+		Button.x = x;
 	}
 
 	@Override
 	public void setY(int y) {
 		// TODO Auto-generated method stub
-		this.y = y;
+		Button.y = y;
 	}
 
 	@Override
@@ -66,7 +67,9 @@ public class Button extends Components implements ButtonInterfaceDavidS {
 	public void highlight() {
 		// TODO Auto-generated method stub
 		isHighlighted = true;
-		normalColor = color;
+		if(color != null){
+			normalColor = color;
+		}
 		update();
 	}
 
@@ -84,12 +87,10 @@ public class Button extends Components implements ButtonInterfaceDavidS {
 	public void update(Graphics2D g) {
 		// TODO Auto-generated method stub
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		if(!isHighlighted){
-			g.setColor(normalColor);
-			g.fillOval(x,y,w,h);
-			g.setColor(Color.black);
-			g.drawOval(x, y, w - 1, h - 1);
-		}
+		g.setColor(normalColor);
+		g.fillOval(0,0,w,h);
+		g.setColor(Color.black);
+		g.drawOval(0,0, w - 1, h - 1);
 		if(isHighlighted){
 			g.setColor(normalColor);
 			g.fillOval(x, y, w, h);
