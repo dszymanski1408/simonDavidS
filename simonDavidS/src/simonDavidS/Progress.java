@@ -14,10 +14,10 @@ public class Progress extends Components implements ProgressInterfaceDavidS {
 	
 	private boolean gameOver;
 	private static int height = 50;
-	private static int width = 120;
+	private static int width = 140;
 	private String round;
 	private String sequenceSize;
-	private String font = "Helvetica";
+	private String font = "Comic Sans MS";
 	private int size = 20;
 	
 	
@@ -30,7 +30,7 @@ public class Progress extends Components implements ProgressInterfaceDavidS {
 	@Override
 	public void setSequenceSize(int size) {
 		// TODO Auto-generated method stub
-		sequenceSize = "Round length " + size;
+		sequenceSize = "Length " + size;
 		update();
 	}
 
@@ -58,14 +58,15 @@ public class Progress extends Components implements ProgressInterfaceDavidS {
 			g.setColor(Color.green);
 			g.fillRect(0,0,width,height);
 			g.setColor(Color.black);
-			if(round != null) g.drawString(round, (width - fm.stringWidth(round)), 20);
-			if(sequenceSize != null) g.drawString(sequenceSize, (width - fm.stringWidth(sequenceSize)), 40);
+			g.drawRect(0,0,width-1, height -1);
+			if(round != null) g.drawString(round, (width - fm.stringWidth(round))/2, 20);
+			if(sequenceSize != null) g.drawString(sequenceSize, (width - fm.stringWidth(sequenceSize))/2, 40);
 		}
 		else{
 			g.setColor(Color.red);
 			g.fillRect(0, 0, width, height);
 			g.setColor(Color.black);
-			g.drawString("Game Over!", (width - fm.stringWidth("Game Over!")), 30);
+			g.drawString("Game Over!", (width - fm.stringWidth("Game Over!"))/2, 30);
 		}
 	}
 
